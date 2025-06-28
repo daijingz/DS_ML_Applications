@@ -99,11 +99,7 @@ Personal Portfolio - [https://daijingz.github.io/Jingze_Portfolio/index.html](ht
   Folder Structures and File Contents
 </h2>
 
-**Applications**
-  - Application projects applying included algorithms
 
-**Documentation**
-  - Documentation showing 
 
 **Module {X}: {Y}**
   - groups of algorithms separated by their solved problems Y
