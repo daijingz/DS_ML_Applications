@@ -104,9 +104,6 @@ Personal Portfolio - [https://daijingz.github.io/Jingze_Portfolio/index.html](ht
 **Module {X}: {Y}**
   - groups of algorithms separated by their solved problems Y
 
-**Testing**
-  - Unit testing files
-
 README.md
   - This file
 
