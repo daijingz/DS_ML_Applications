@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+openai
+snowflake-connector-python
+python-dotenv
+pydantic
