@@ -1,244 +1,132 @@
-\### instruction.md
+### instruction.md
 
+### How to Run the US Census Chat Agent
 
+#### Prerequisites
 
-\### How to Run the US Census Chat Agent
+- Python 3.9 or higher installed
+- A Snowflake account with access to the US Open Census dataset
+- An OpenAI API key
+- Internet connection
 
+---
 
+### Step 1: Clone the Repository
 
-\#### Prerequisites
+- Open terminal or PowerShell
+- Run:
+  - `git clone <your-repo-url>`
+  - `cd us-census-chat-agent`
 
-\- Python 3.9 or higher installed
+---
 
-\- A Snowflake account with access to the US Open Census dataset
+### Step 2: Setup Backend Environment
 
-\- An OpenAI API key
+- Navigate to project root (already in `us-census-chat-agent`)
+- Create virtual environment:
+  - `python -m venv .venv`
+- Activate virtual environment:
+  - Windows: `.venv\Scripts\activate`
+  - Mac/Linux: `source .venv/bin/activate`
+- Install dependencies:
+  - `pip install -r requirements.txt`
 
-\- Internet connection
+---
 
+### Step 3: Configure Environment Variables
 
+- Create a file named `.env` in the root folder
+- Add the following variables:
 
-\---
+  - `OPENAI_API_KEY=your_openai_key`
+  - `OPENAI_MODEL=gpt-4.1-mini`
+  - `SNOWFLAKE_USER=your_user`
+  - `SNOWFLAKE_PASSWORD=your_password`
+  - `SNOWFLAKE_ACCOUNT=your_account`
+  - `SNOWFLAKE_WAREHOUSE=COMPUTE_WH`
+  - `SNOWFLAKE_DATABASE=US_OPEN_CENSUS_DATA__NEIGHBORHOOD_INSIGHTS__FREE_DATASET`
+  - `SNOWFLAKE_SCHEMA=PUBLIC`
 
+---
 
+### Step 4: Verify Snowflake Access
 
-\### Step 1: Clone the Repository
+- Log in to Snowflake web console
+- Ensure the dataset exists:
+  - `US_OPEN_CENSUS_DATA__NEIGHBORHOOD_INSIGHTS__FREE_DATASET`
+- Ensure tables such as:
+  - `2019_CBG_B01`
+- If not available:
+  - Add dataset from Snowflake Marketplace
 
-\- Open terminal or PowerShell
+---
 
-\- Run:
+### Step 5: Run Backend Server
 
-&#x20; - git clone <your-repo-url>
+- From project root, run:
+  - `uvicorn app.api.main:app --reload`
+- Expected output:
+  - Server running at `http://127.0.0.1:8000`
 
-&#x20; - cd us-census-chat-agent
+---
 
+### Step 6: Run Frontend
 
+- Open a new terminal window
+- Navigate to frontend folder:
+  - `cd frontend`
+- Start simple HTTP server:
+  - `python -m http.server 8000`
+- Open browser and go to:
+  - `http://localhost:8000`
 
-\---
+---
 
+### Step 7: Test the Application
 
+- Enter a query in the chat box:
+  - `population of California`
+  - `population of New York`
+- Verify:
+  - Response appears in UI
+  - SQL query is generated
+  - Data is returned
 
-\### Step 2: Setup Backend Environment
+---
 
-\- Navigate to backend folder:
+### Step 8: Troubleshooting
 
-&#x20; - cd backend
+- Backend not starting:
+  - Check virtual environment is activated
+  - Check dependencies installed
 
-\- Create virtual environment:
+- Snowflake query fails:
+  - Verify credentials in `.env`
+  - Check database and schema names
+  - Ensure table exists
 
-&#x20; - python -m venv .venv
+- Frontend not working:
+  - Ensure backend is running
+  - Ensure correct port (8000)
+  - Check browser console for errors
 
-\- Activate virtual environment:
+- Same result for all queries:
+  - Likely missing WHERE clause in SQL builder
+  - Check geography parsing logic
 
-&#x20; - Windows: .venv\\Scripts\\activate
+---
 
-&#x20; - Mac/Linux: source .venv/bin/activate
+### Step 9: Stop the Application
 
-\- Install dependencies:
+- Stop backend:
+  - Press `Ctrl + C` in terminal
+- Stop frontend:
+  - Press `Ctrl + C` in frontend terminal
 
-&#x20; - pip install -r requirements.txt
+---
 
+### Notes
 
-
-\---
-
-
-
-\### Step 3: Configure Environment Variables
-
-\- Create a file named `.env` inside the backend folder
-
-\- Add the following variables:
-
-&#x20; - OPENAI\_API\_KEY=your\_openai\_key
-
-&#x20; - OPENAI\_MODEL=gpt-4.1-mini
-
-&#x20; - SNOWFLAKE\_USER=your\_user
-
-&#x20; - SNOWFLAKE\_PASSWORD=your\_password
-
-&#x20; - SNOWFLAKE\_ACCOUNT=your\_account
-
-&#x20; - SNOWFLAKE\_WAREHOUSE=COMPUTE\_WH
-
-&#x20; - SNOWFLAKE\_DATABASE=US\_OPEN\_CENSUS\_DATA\_\_NEIGHBORHOOD\_INSIGHTS\_\_FREE\_DATASET
-
-&#x20; - SNOWFLAKE\_SCHEMA=PUBLIC
-
-
-
-\---
-
-
-
-\### Step 4: Verify Snowflake Access
-
-\- Log in to Snowflake web console
-
-\- Ensure the dataset exists:
-
-&#x20; - US\_OPEN\_CENSUS\_DATA\_\_NEIGHBORHOOD\_INSIGHTS\_\_FREE\_DATASET
-
-\- Ensure tables such as:
-
-&#x20; - 2019\_CBG\_B01
-
-\- If not available:
-
-&#x20; - Add dataset from Snowflake Marketplace
-
-
-
-\---
-
-
-
-\### Step 5: Run Backend Server
-
-\- From backend folder, run:
-
-&#x20; - uvicorn app.api.main:app --reload
-
-\- Expected output:
-
-&#x20; - Server running at http://127.0.0.1:8000
-
-
-
-\---
-
-
-
-\### Step 6: Run Frontend
-
-\- Open a new terminal window
-
-\- Navigate to frontend folder:
-
-&#x20; - cd frontend
-
-\- Start simple HTTP server:
-
-&#x20; - python -m http.server 8000
-
-\- Open browser and go to:
-
-&#x20; - http://localhost:8000
-
-
-
-\---
-
-
-
-\### Step 7: Test the Application
-
-\- Enter a query in the chat box:
-
-&#x20; - population of California
-
-&#x20; - population of New York
-
-\- Verify:
-
-&#x20; - Response appears in UI
-
-&#x20; - SQL query is generated
-
-&#x20; - Data is returned
-
-
-
-\---
-
-
-
-\### Step 8: Troubleshooting
-
-
-
-\- Backend not starting:
-
-&#x20; - Check virtual environment is activated
-
-&#x20; - Check dependencies installed
-
-
-
-\- Snowflake query fails:
-
-&#x20; - Verify credentials in `.env`
-
-&#x20; - Check database and schema names
-
-&#x20; - Ensure table exists
-
-
-
-\- Frontend not working:
-
-&#x20; - Ensure backend is running
-
-&#x20; - Ensure correct port (8000)
-
-&#x20; - Check browser console for errors
-
-
-
-\- Same result for all queries:
-
-&#x20; - Likely missing WHERE clause in SQL builder
-
-&#x20; - Check geography parsing logic
-
-
-
-\---
-
-
-
-\### Step 9: Stop the Application
-
-\- Stop backend:
-
-&#x20; - Press Ctrl + C in terminal
-
-\- Stop frontend:
-
-&#x20; - Press Ctrl + C in frontend terminal
-
-
-
-\---
-
-
-
-\### Notes
-
-\- Always run backend before frontend
-
-\- Ports must match between frontend and backend
-
-\- Use port 8000 for both if possible
-
+- Always run backend before frontend
+- Ports must match between frontend and backend
+- Use port 8000 for both if possible
